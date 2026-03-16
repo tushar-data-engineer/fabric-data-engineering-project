@@ -1,65 +1,112 @@
-# Microsoft Fabric API Data Pipeline
+# 🚀 Microsoft Fabric API Data Pipeline
 
-This project demonstrates an end-to-end data engineering pipeline built using Microsoft Fabric. The pipeline extracts data from a public REST API, stores the raw data in a Lakehouse Bronze layer, and processes the data through Silver and Gold layers using notebooks.
+This project demonstrates an **end-to-end data engineering pipeline built using Microsoft Fabric**. The pipeline extracts data from a public REST API, stores raw data in the **Lakehouse Bronze layer**, and processes the data through **Silver and Gold layers** using Fabric notebooks.
 
-## Pipeline Overview
+The solution follows the **Medallion Architecture (Bronze → Silver → Gold)** to enable scalable and structured data processing for analytics.
 
-The pipeline contains three main stages:
+---
 
-**1. Extract_from_API**
+# 🔄 Pipeline Overview
 
-This step uses a Copy activity to fetch data from a REST API using an HTTP GET request. The API response is read as JSON and stored in the Fabric Lakehouse. The raw data is written to the Bronze layer as a JSON file.
+The pipeline consists of **three main stages**.
 
-Raw data path:
+---
+
+## 1️⃣ Extract_from_API
+
+This stage uses a **Copy Activity** in Microsoft Fabric Data Pipeline to fetch data from a **REST API** using an HTTP GET request.
+
+The API response is retrieved in **JSON format** and stored directly in the **Lakehouse Bronze layer** as raw data.
+
+**Raw Data Path**
+
+```
 API_data/bronze/posts/Raw_API_DATA.json
+```
 
-This layer stores unprocessed data exactly as received from the source system.
+The Bronze layer stores the **unprocessed source data exactly as received**, ensuring traceability and reproducibility.
 
-**2. bronze_TO_Silver**
+---
 
-After the raw data is ingested, a Microsoft Fabric notebook processes the Bronze data. In this stage the data is cleaned, validated, and transformed into a structured format suitable for analytics.
+## 2️⃣ Bronze_to_Silver
+
+Once the raw data is ingested, a **Microsoft Fabric Notebook** processes the Bronze data and transforms it into a structured dataset suitable for analytics.
 
 Typical transformations include:
 
-* Removing invalid records
-* Flattening JSON structure
+* Removing invalid or duplicate records
+* Flattening nested JSON structures
 * Standardizing column names
-* Data type conversions
+* Performing data type conversions
+* Applying basic data validation rules
 
-The cleaned data is then stored in the Silver layer.
+The processed dataset is then stored in the **Silver layer** as structured tables.
 
-**3. Silver_to_Gold**
+The Silver layer contains **clean and reliable datasets ready for further transformation**.
 
-In the final stage, another notebook processes the Silver layer data to create analytics-ready datasets. The Gold layer contains curated and aggregated tables designed for reporting and business intelligence.
+---
 
-These datasets can be used by dashboards, reporting tools, or downstream analytics systems.
+## 3️⃣ Silver_to_Gold
 
-## Architecture Flow
+In the final stage, another Fabric notebook processes the **Silver layer tables** to create **analytics-ready datasets**.
 
+The Gold layer contains **curated and aggregated tables** optimized for reporting and business intelligence.
+
+Typical operations include:
+
+* Data aggregation
+* Business metric calculations
+* Data enrichment
+* Preparing datasets for analytics
+
+These datasets can be consumed by:
+
+* Power BI dashboards
+* reporting tools
+* downstream analytics systems
+
+---
+
+# 🏗 Architecture Flow
+
+```
 API Source
-↓
-Copy Activity (Extract_from_API)
-↓
-Bronze Layer (Raw JSON in Lakehouse)
-↓
-Notebook Transformation (bronze_TO_Silver)
-↓
+      ↓
+Fabric Data Pipeline (Copy Activity)
+      ↓
+Bronze Layer (Raw JSON Files in Lakehouse)
+      ↓
+Notebook Transformation (Bronze → Silver)
+      ↓
 Silver Layer (Clean Structured Data)
-↓
-Notebook Aggregation (Silver_to_Gold)
-↓
-Gold Layer (Business Ready Data)
+      ↓
+Notebook Aggregation (Silver → Gold)
+      ↓
+Gold Layer (Analytics Ready Data)
+```
 
-## Technologies Used
+---
+
+# 🧰 Technologies Used
 
 * Microsoft Fabric
-* Fabric Data Pipeline
+* Fabric Data Pipelines
 * Lakehouse Architecture
 * REST API Data Ingestion
-* Notebook-based Data Transformation
+* PySpark / Fabric Notebooks
 * JSON Data Processing
-* Git for version control
+* Git for Version Control
 
-## Purpose of the Project
+---
 
-This project demonstrates how to design a scalable data pipeline using Microsoft Fabric and implement a Medallion Architecture for structured data processing. It highlights core data engineering concepts such as data ingestion, transformation pipelines, and layered data architecture.
+# 🎯 Purpose of the Project
+
+This project demonstrates how to design and implement a **scalable data pipeline using Microsoft Fabric**.
+
+It highlights key data engineering practices including:
+
+* ingesting data from external APIs
+* implementing Medallion Architecture
+* notebook-based data transformations
+* layered data modeling for analytics
+* building analytics-ready datasets for reporting and dashboards
